@@ -1,5 +1,7 @@
 dconf::set { "/com/canonical/indicator/datetime/show-date":
     value => "true",
+    user => 'myuser',
+    group => 'usergroup',
 }
 
 dconf::set { 'org/gnome/settings-daemon/peripherals/touchpad/scroll-method':

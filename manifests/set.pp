@@ -4,10 +4,10 @@
 #
 # Note: `value` needs to be escaped in a non-intuitive way. See the examples in the README.
 
-define dconf::set ($value) {
+define dconf::set ($value,$user,$group) {
 	include dconf
 
-	debug "Dconf: set $name to $value"
+	debug "Dconf: set $name to $value for user $user and group $group"
 
 	exec { "dconf set $name":
 		command => "/bin/sh -c 'eval `dbus-launch --auto-syntax`'\" && dconf write $name \\\"$value\\\"\"",
@@ -15,5 +15,8 @@ define dconf::set ($value) {
 		onlyif => "/bin/sh -c 'eval `dbus-launch --auto-syntax`'\" && test \\\"$value\\\" != \\\"`dconf read $name`\\\"\"",
 		logoutput => "true",
 		require => Package['dconf-tools'],
+		user => $user,
+		group => $group,
+		environment => "XDG_RUNTIME_DIR=/run/user/$user",
 	}
 }

@@ -13,6 +13,8 @@ Example with a bool (no quoting/escaping needed) ::
 
     dconf::set { "/com/canonical/indicator/datetime/show-date":
             value => "true",
+            user => "myuser",
+            group => "mygroup",
     }
 
 Example with a string (add quotes) ::
